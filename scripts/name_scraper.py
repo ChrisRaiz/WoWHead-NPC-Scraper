@@ -32,7 +32,7 @@ options.add_argument("--headless=new")
 driver = webdriver.Chrome(options=options)
 
 # Gather name data for npc id (start, end)
-for row in range(0, 20725):
+for row in range(0, 5):
   npc_id = df.get("ID")[row] # Get ID from valid_ids.csv
   driver.get(f"https://www.wowhead.com/npc={npc_id}")
 
@@ -40,15 +40,15 @@ for row in range(0, 20725):
 
   # Get the title text (name - NPC - World of Warcraft)
   try:
-    npc_name = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/head/title"))).get_attribute('innerText')
+    name = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "/html/head/title"))).get_attribute('innerText')
   except TimeoutException:
     timeout_ids.append({'ID': npc_id})
     continue
   
   # Check if the title is a valid ID
-  if " - NPC - World of Warcraft" in npc_name:
-    npc_name = npc_name.replace(" - NPC - World of Warcraft", "").strip()
-    npc_names.append({'ID': npc_id, 'Name': npc_name})
+  if " - NPC - World of Warcraft" in name:
+    name = name.replace(" - NPC - World of Warcraft", "").strip()
+    npc_names.append({'ID': npc_id, 'Name': name})
     continue
 
   # Invalid ID if loop is not continued
