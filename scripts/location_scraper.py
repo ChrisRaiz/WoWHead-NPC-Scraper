@@ -2,14 +2,17 @@
 import csv
 import re
 import pandas
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
-from pathlib import Path
 
+# Path to valid_ids.csv
 file = Path(__file__).parent / "valid_ids.csv"
+
+# Read valid_ids.csv (Pandas)
 df = pandas.read_csv(file)
 
 # Timeout IDs
@@ -31,9 +34,10 @@ driver = webdriver.Chrome(options=options)
 
 # Gather location data for npc id (start, end)
 for row in range(0, 20725):
-  npc_id = df.get("ID")[row]
-  print(npc_id)
+  npc_id = df.get("ID")[row] # Get ID from valid_ids.csv
   driver.get(f"https://www.wowhead.com/npc={npc_id}")
+
+  print(npc_id)
 
   location_unknown = False
 

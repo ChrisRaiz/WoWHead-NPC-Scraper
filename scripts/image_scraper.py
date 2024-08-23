@@ -1,10 +1,18 @@
 # Imports
 import csv
+import pandas
+from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+
+# Path to valid_ids.csv
+file = Path(__file__).parent / "valid_ids.csv"
+
+# Read valid_ids.csv (Pandas)
+df = pandas.read_csv(file)
 
 # Timeout IDs
 timeout_id_data = "Timeout_IDs.csv"
@@ -24,9 +32,11 @@ options.add_argument("--headless=new")
 driver = webdriver.Chrome(options=options)
 
 # Gather img data for npc id (start, end)
-for npc_id in range(1, 1000):
-  print(npc_id)
+for row in range(0, 20725):
+  npc_id = df.get("ID")[row] # Get ID from valid_ids.csv
   driver.get(f"https://www.wowhead.com/npc={npc_id}")
+
+  print(npc_id)
 
   # Gather all img tags on page
   try:
