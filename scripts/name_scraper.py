@@ -32,7 +32,7 @@ options.add_argument("--headless=new")
 driver = webdriver.Chrome(options=options)
 
 # Gather name data for npc id (start, end)
-for row in range(0, 5):
+for row in range(0, 20725):
   npc_id = df.get("ID")[row] # Get ID from valid_ids.csv
   driver.get(f"https://www.wowhead.com/npc={npc_id}")
 
