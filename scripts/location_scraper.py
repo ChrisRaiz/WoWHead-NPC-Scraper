@@ -2,7 +2,6 @@
 import csv
 import re
 import pandas
-import time
 from pathlib import Path
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,44 +10,100 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException, WebDriverException
 
 # Base
-# csv_path = ['./../Base-WoW/ID/Base_IDs.csv', './Base-WoW/Timeout/Timeout_IDs.csv', './Base-WoW/Invalid/Invalid_IDs.csv', './Base-WoW/Data/NPC_Location.csv']
+csv_path = [
+'./../Expansions/Base/ID/Base_IDs.csv',
+'./../Expansions/Base/Timeout/Base_Locations_Timeout_IDs.csv',
+'./../Expansions/Base/Invalid/Base_Locations_Invalid_IDs.csv',
+'./../Expansions/Base/Data/Base_NPC_Locations.csv'
+]
 
 # Burning Crusade
-csv_path = ['./../BC-WoW/ID/BC_IDs.csv', './../BC-WoW/Timeout/BC_Timeout_IDs.csv', './../BC-WoW/Invalid/BC_Invalid_IDs.csv', './../BC-WoW/Data/BC_NPC_Locations.csv']
+# csv_path = [
+#   './../Expansions/BC/ID/BC_IDs.csv',
+#   './../Expansions/BC/Timeout/BC_Locations_Timeout_IDs.csv',
+#   './../Expansions/BC/Invalid/BC_Locations_Invalid_IDs.csv',
+#   './../Expansions/BC/Data/BC_NPC_Locations.csv'
+#   ]
 
 # Wrath of the Lich King
-# csv_path = ['./../WOTLK-WoW/ID/WOTLK_IDs.csv', './WOTLK-WoW/Timeout/Timeout_IDs.csv', './WOTLK-WoW/Invalid/Invalid_IDs.csv', './WOTLK-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/WOTLK/ID/WOTLK_IDs.csv',
+# './../Expansions/WOTLK/Timeout/WOTLK_Locations_Timeout_IDs.csv',
+# './../Expansions/WOTLK/Invalid/WOTLK_Locations_Invalid_IDs.csv',
+# './../Expansions/WOTLK/Data/WOTLK_NPC_Locations.csv'
+# ]
 
 # Cataclysm
-# csv_path = ['./../CAT-WoW/ID/CAT_IDs.csv, './CAT-WoW/Timeout/Timeout_IDs.csv', './CAT-WoW/Invalid/Invalid_IDs.csv', './CAT-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/CAT/ID/CAT_IDs.csv',
+# './../Expansions/CAT/Timeout/CAT_Locations_Timeout_IDs.csv',
+# './../Expansions/CAT/Invalid/CAT_Locations_Invalid_IDs.csv',
+# './../Expansions/CAT/Data/CAT_NPC_Locations.csv'
+# ]
 
 # Mists of Pandaria
-# csv_path = ['./../MOP-WoW/ID/MOP_IDs.csv, './MOP-WoW/Timeout/Timeout_IDs.csv', './MOP-WoW/Invalid/Invalid_IDs.csv', './MOP-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/MOP/ID/MOP_IDs.csv',
+# './../Expansions/MOP/Timeout/MOP_Locations_Timeout_IDs.csv',
+# './../Expansions/MOP/Invalid/MOP_Locations_Invalid_IDs.csv',
+# './../Expansions/MOP/Data/MOP_NPC_Locations.csv'
+# ]
 
 # Warlords of Draenor
-# csv_path = ['./../WOD-WoW/ID/WOD_IDs.csv, './WOD-WoW/Timeout/Timeout_IDs.csv', './WOD-WoW/Invalid/Invalid_IDs.csv', './WOD-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/WOD/ID/WOD_IDs.csv',
+# './../Expansions/WOD/Timeout/WOD_Locations_Timeout_IDs.csv',
+# './../Expansions/WOD/Invalid/WOD_Locations_Invalid_IDs.csv',
+# './../Expansions/WOD/Data/WOD_NPC_Locations.csv'
+# ]
 
 # Legion
-# csv_path = ['./../LEG-WoW/ID/LEG_IDs.csv, './LEG-WoW/Timeout/Timeout_IDs.csv', './LEG-WoW/Invalid/Invalid_IDs.csv', './LEG-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/LEG/ID/LEG_IDs.csv',
+# './../Expansions/LEG/Timeout/LEG_Locations_Timeout_IDs.csv',
+# './../Expansions/LEG/Invalid/LEG_Locations_Invalid_IDs.csv',
+# './../Expansions/LEG/Data/LEG_NPC_Locations.csv'
+# ]
 
 # Battle for Azeroth
-# csv_path = ['./../BFA-WoW/ID/BFA_IDs.csv, './BFA-WoW/Timeout/Timeout_IDs.csv', './BFA-WoW/Invalid/Invalid_IDs.csv', './BFA-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/BFA/ID/BFA_IDs.csv',
+# './../Expansions/BFA/Timeout/BFA_Locations_Timeout_IDs.csv',
+# './../Expansions/BFA/Invalid/BFA_Locations_Invalid_IDs.csv',
+# './../Expansions/BFA/Data/BFA_NPC_Locations.csv'
+# ]
 
 # Shadowlands
-# csv_path = ['./../SL-WoW/ID/SL_IDs.csv, './SL-WoW/Timeout/Timeout_IDs.csv', './SL-WoW/Invalid/Invalid_IDs.csv', './SL-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/SL/ID/SL_IDs.csv',
+# './../Expansions/Timeout/SL_Locations_Timeout_IDs.csv',
+# './../Expansions/Invalid/SL_Locations_Invalid_IDs.csv',
+# './../Expansions/Data/SL_NPC_Locations.csv'
+# ]
 
 # Dragonflight
-# csv_path = ['./../DRA-WoW/ID/DRA_IDs.csv, './DRA-WoW/Timeout/Timeout_IDs.csv', './DRA-WoW/Invalid/Invalid_IDs.csv', './DRA-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/DRA/ID/DRA_IDs.csv',
+# './../Expansions/DRA/Timeout/DRA_Locations_Timeout_IDs.csv',
+# './../Expansions/DRA/Invalid/DRA_Locations_Invalid_IDs.csv',
+# './../Expansions/DRA/Data/DRA_NPC_Locations.csv'
+# ]
 
 # The War Within
-# csv_path = ['./../TWW-WoW/ID/TWW_IDs.csv, './TWW-WoW/Timeout/Timeout_IDs.csv', './TWW-WoW/Invalid/Invalid_IDs.csv', './TWW-WoW/Data/NPC_Location.csv']
+# csv_path = [
+# './../Expansions/TWW/ID/TWW_IDs.csv',
+# './../Expansions/TWW/Timeout/TWW_Locations_Timeout_IDs.csv',
+# './../Expansions/TWW/Invalid/TWW_Locations_Invalid_IDs.csv',
+# './../Expansions/TWW/Data/TWW_NPC_Locations.csv'
+# ]
 
-# Path to valid_ids.csv
+# Paths to csv files
 id_path = Path(__file__).parent / csv_path[0]
 timeout_path = Path(__file__).parent / csv_path[1]
 invalid_path = Path(__file__).parent / csv_path[2]
 locations_path = Path(__file__).parent / csv_path[3]
-# Read valid_ids.csv (Pandas)
+
+# Read IDs csv
 df = pandas.read_csv(id_path)
 end = len(df)
 
@@ -66,17 +121,15 @@ options = webdriver.ChromeOptions()
 options.add_argument('--headless=new')
 driver = webdriver.Chrome(options=options)
 
-# Gather location data for npc id (start, end)
+# Gather location data for every row
 for row in range(0, end):
   npc_id = df.get('ID')[row] # Get ID from valid_ids.csv
   print(npc_id)
 
   try:
-    # Load webpage / wait 2 seconds before continuing
+    # Load webpage / load page wait - 2 seconds 
     driver.get(f'https://www.wowhead.com/npc={npc_id}')
-    time.sleep(2)
 
-    # If True, continue to next ID
     location_found = False
 
     # Redirect if url is incorrect (Different Expansion DB)
@@ -91,11 +144,13 @@ for row in range(0, end):
     # Check if location is unknown
     try:
       meta_tags = WebDriverWait(driver, 10).until(EC.presence_of_all_elements_located((By.TAG_NAME, 'meta')))
+      
       for tag in meta_tags:
         if tag.get_attribute('property') == 'og:description' and 'The location of this NPC is unknown' in tag.get_attribute('content'):
           location_found = True
           npc_locations.append({'ID': npc_id, 'Locations': 'Unknown'})
           break
+
       if location_found == True:
         continue
     except TimeoutException:
@@ -105,10 +160,12 @@ for row in range(0, end):
     try:
       locations_container = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="locations"]')))
       locations = locations_container.text
+
       if locations:
         location_found = True
         locations = re.sub('[^a-zA-Z,]+', ' ', locations).replace(' ,', ',').strip()
         npc_locations.append({'ID': npc_id, 'Locations': locations})
+
       if location_found == True:
         continue
     except TimeoutException:
@@ -134,7 +191,6 @@ for row in range(0, end):
       
     # Invalid ID if loop is not continued
     invalid_ids.append({'ID': npc_id})
-
   except WebDriverException:
     timeout_ids.append({'ID': npc_id})
 
