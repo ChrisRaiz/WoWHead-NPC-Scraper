@@ -1,6 +1,6 @@
-# Dynamic-Web-Scraper
+# WoWHead-NPC-Scraper
 
-Dynamic web scraper for gathering data to be used for discord bot
+WoWHead NPC Scraper pulls the data from the NPC database section of the WoWHead website. The Selenium package is the primary tool used for scraping the pages due to the data being searched for only becoming available after the page scripts execute.
 
 ## Creating a Virtual Environment (Python's venv module)
 
