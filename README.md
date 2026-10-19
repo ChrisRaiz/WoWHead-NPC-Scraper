@@ -7,7 +7,7 @@ A Selenium-based scraper that collects World of Warcraft NPC data from [Wowhead]
 ![pandas](https://img.shields.io/badge/pandas-150458?logo=pandas&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-📖 **[Full Documentation](https://claude.ai/code/artifact/4d800394-af0a-4dfd-8dc8-0a94c42e845b)**: setup, usage, output format, and troubleshooting.
+📖 **[Full Documentation](docs/DOCUMENTATION.md)**: setup, usage, output format, and troubleshooting.
 
 ---
 
